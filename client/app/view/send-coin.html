@@ -1,0 +1,45 @@
+<div class="modal fade" id="send-coin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">--</h4>
+        </div>
+        <div class="modal-body">
+    <form>
+        <fieldset>
+            <h2></h2>
+                <div class="row">
+                    <div class="col-lg-8">
+                        
+                        <div class="form-group">
+                                <label><%= ctx.__('my_wallet')%></label> 
+                            <input  name="wallet" class="form-control required" v-validate="'required'" v-model="sb.wallet">
+                            <span v-show="errors.has('wallet')" class="text-danger">{{ errors.first('secret') }}</span>
+                        </div>                                
+                        <div class="form-group">
+                            <label><%= ctx.__('fee_setting')%> *</label>
+                            <input  name="fee" class="form-control required" v-validate="'required'" v-model="sb.fee" >
+                            <span v-show="errors.has('fee')" class="text-danger">{{ errors.first('fee') }}</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="text-center">
+                            <div style="margin-top: 20px">
+                                <i class="fa fa-sign-in" style="font-size: 180px;color: #e5e5e5 "></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+    </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  <button type="button" class="btn btn-primary" v-on:click="sendCoin">开始转账</button>
+</div>
+</div>
+</div>
+</div>
+
+

@@ -1,0 +1,12 @@
+client/logs/
+client/npm-debug.log
+client/yarn-error.log
+client/node_modules/
+client/package-lock.json
+client/yarn.lock
+client/coverage/
+client/.idea/
+client/run/
+client/.DS_Store
+client/*.sw*
+client/*.un~

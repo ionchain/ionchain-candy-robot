@@ -1,0 +1,146 @@
+<div id="user" class="wrapper wrapper-content animated fadeInRight tab-pane active" role="tabpanel">         
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5></h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Config option 1</a>
+                                </li>
+                                <li><a href="#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content" >
+                        <div class="row">
+                                <div class="col-sm-10 m-b-xs">
+                                <form class="form-inline">
+                                    <fieldset>
+                                        <div class="row">  
+                                            <div class="form-group">
+                                                <label class="fileinput-exists">上传Excel</label>                                              
+                                            </div>    
+                                            <div class="form-group">
+                                                <input type="file" name="excel" id="excel" style="width: 170px;"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <button class="btn btn-primary" type="button" v-on:click="upload">上传</button>
+                                            </div>                                            
+                                            <div class="form-group">
+                                                <label><%= ctx.__('my_wallet')%></label> 
+                                                <input  name="fromAddrees" class="form-control required" v-validate="'required'" v-model="sb.fromAddress">
+                                                <span v-show="errors.has('fromAddrees')" class="text-danger">{{ errors.first('fromAddrees') }}</span>
+                                            </div> 
+                                            <div class="form-group">
+                                                <label><%= ctx.__('secret')%> *</label>
+                                                <input  name="privateKey" class="form-control required" v-validate="'required'" v-model="sb.privateKey" >
+                                                <span v-show="errors.has('privateKey')" class="text-danger">{{ errors.first('privateKey') }}</span>
+                                            </div>                                  
+                                            <div class="form-group">
+                                                <label><%= ctx.__('fee_setting')%> *</label>
+                                                <input  name="amout" class="form-control required" v-validate="'required'" v-model="sb.amount" >
+                                                <span v-show="errors.has('amout')" class="text-danger">{{ errors.first('amout') }}</span>
+                                            </div>   
+                                            <div class="form-group">
+                                                <button class="btn btn-primary" type="button" v-on:click="sendCoin"><%=ctx.__('start_transfer') %></button>
+                                            </div>                                             
+                                        </div>
+                                    </fieldset>
+                                </form>
+                                
+                                </div>                                
+                                <div class="col-sm-2">                                    
+                                </div>
+                            </div>
+                        <div>
+                            <div style="float: right;">
+                                <span>每页显示数量</span>
+                                <select v-model="pageCount">
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                            <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th><template v-if="status_select == 0"><input type="checkbox" id="checkAllBox" v-model="checkAll"></template><%=ctx.__('seq_id') %></th>
+                                <th><%=ctx.__('commit_time') %></th>
+                                <th><%=ctx.__('name') %></th>
+                                <th><%=ctx.__('address') %></th>
+                                <th><%=ctx.__('weixin') %></th>
+                                <th><%=ctx.__('phone') %></th>
+                                <th><%=ctx.__('eth_address') %></th>
+                                <th><%=ctx.__('status') %>
+                                    <select v-model="status_select">
+                                        <option value="0" selected="selected">未转账</option>
+                                        <option value="1">转账成功</option>
+                                        <option value="2">转账失败</option>
+                                    </select>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="item in displayRewards">
+                                    <td>
+                                        <template v-if="status_select == 0"><input type="checkbox" name="eth_checkbox" v-model="select_eth" v-bind:value="item.eth_address"></template>
+                                        {{item.seq_id}}
+                                    </td>
+                                    <td>{{item.commit_time}}</td>
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.address}}</td>
+                                    <td>{{item.weixin}}</td>
+                                    <td>{{item.phone}}</td>
+                                    <td>{{item.eth_address}}</td>
+                                    <td>
+                                        <template v-if="item.status === 0">未转账</template>
+                                        <template v-else-if="item.status === 1">转账成功</template>
+                                        <template v-else>转账失败</template>
+                                    </td>
+                                </tr> 
+                            </tbody>
+                        </table>
+                        <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                  <li>
+                                    <a href="#" aria-label="Previous" v-on:click="changePage(1)">
+                                      <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                  </li>
+                                  <template v-for="item in pages">
+                                    <template v-if="item == currentPage">
+                                        <li class="active"><a href="#" v-on:click="changePage(item)">{{item}}</a></li>
+                                    </template>
+                                    <template v-else>
+                                        <li><a href="#" v-on:click="changePage(item)">{{item}}</a></li>
+                                    </template>
+                                  </template>
+                                 
+                                  <li>
+                                    <a href="#" aria-label="Next" v-on:click="changePage(pageTotalCount)">
+                                      <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                  </li>
+                                </ul>
+                                
+                        </nav>
+                        
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
