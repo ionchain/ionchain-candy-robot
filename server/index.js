@@ -4,6 +4,12 @@ let compiledContract = require("./IONCToken.json");
 let express = require('express');
 let bodyParser = require('body-parser');
 let config = require('./config.json');
+let moment = require('moment');
+let log4js = require('log4js');
+var log4js_config = require("./log4js.json");
+log4js.configure(log4js_config);
+const logger = log4js.getLogger('cheese');
+logger.level = 'info';
 let app = express();
 //support parsing of application/json type post data
 app.use(bodyParser.json());
@@ -16,6 +22,7 @@ app.use(bodyParser.urlencoded({
  * 账户转账
  */
 app.post('/transfer', function(req,res){
+    logger.info("*******转账开始*******"+moment().format());
     //获取参数
     let fromAddress = req.body.fromAddress;//钱包地址
     let toAddress = req.body.toAddress;//接收方地址
@@ -68,10 +75,14 @@ app.post('/transfer', function(req,res){
     contract.at(config.contractAddress).then(instance => {
         let promises = [];
         for(var i = 0 ; i < toAddress.length; i++ ){
-            let promise = instance.transfer(toAddress[i], contract.web3.toWei(amount), {from: fromAddress})
+            let promise = instance.transfer(toAddress[i], contract.web3.toWei(amount), {from: fromAddress,gas:100000+i*500})
                 .then(result=>{
                     console.log(JSON.stringify(result));
-                    return "您向"+result.logs[0].args._to+"转账的"+contract.web3.fromWei(result.logs[0].args._value)+"已经成功";
+                    if(result.logs.length > 0){
+                        return "您向"+result.logs[0].args._to+"转账的"+contract.web3.fromWei(result.logs[0].args._value)+"已经成功";
+                    }else{
+                        return "转账失败";
+                    }
                 }).catch(err=>{
                     console.log(err);
                     return "转账失败";
@@ -87,6 +98,8 @@ app.post('/transfer', function(req,res){
                 success: flag,
                 message: result
             });
+            logger.info(result+"");
+            logger.info("*******转账结束*******"+moment().format());
         }).catch(err=>{
             console.log("error=>"+err);
         })
