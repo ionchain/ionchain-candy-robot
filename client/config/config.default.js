@@ -72,8 +72,10 @@ module.exports = appInfo => {
     ],
   };
 
+  // 转账地址
   config.tranferUrl = 'http://192.168.23.113:8080/transfer';
 
+  // 默认的用户名密码
   config.defaultUser = {
     username: 'admin',
     password: 'abcd.1234',

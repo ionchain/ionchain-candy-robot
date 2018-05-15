@@ -31,3 +31,5 @@ $ npm stop
 
 
 [egg]: https://eggjs.org
+
+部分配置见config/config.default.js
