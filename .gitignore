@@ -1,5 +1,5 @@
 client/logs/
-client/app/public/upload/
+client/app/public/upload/*.xlsx
 client/npm-debug.log
 client/yarn-error.log
 client/node_modules/
