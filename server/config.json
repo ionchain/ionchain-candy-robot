@@ -1,5 +1,5 @@
 {
-  "contractAddress":"0x92e831bbbb22424e0f22eebb8beb126366fa07ce",
+  "contractAddress":"0xbc647aad10114b89564c0a7aabe542bd0cf2c5af",
   "port":"8080",
-  "providerUrl":"https://ropsten.infura.io/"
+  "providerUrl":"https://mainnet.infura.io"
 }
