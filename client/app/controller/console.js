@@ -7,41 +7,6 @@ const uuidv1 = require('uuid/v1');
 const fs = require('fs');
 const awaitWriteStream = require('await-stream-ready').write;
 class ConsoleController extends Controller {
-  async showAdminList() {
-    await this.ctx.render('console/admin-list');
-  }
-
-  /*
-  各种表的list
-  */
-  async list() {
-    const { ctx, service, config } = this;
-    const page = ctx.request.query.page || 1;
-    const table = ctx.request.query.table;
-    if (!config.tableSet.has(table)) {
-      ctx.body = {
-        code: 1,
-        data: {},
-        message: ctx.__('param_error'),
-      };
-      return;
-    }
-    const result = await service.base.getAllByPage(table, page);
-    ctx.body = {
-      code: 0,
-      data: result,
-      message: ctx.__('opt_success'),
-    };
-  }
-
-
-  /*
-  * 管理员首页
-  */
-  async adminIndex() {
-    await this.ctx.render('console/admin-index');
-  }
-
   /*
   * 获取csrfToken
   */
