@@ -39,18 +39,18 @@
                                             </div>                                            
                                             <div class="form-group">
                                                 <label><%= ctx.__('my_wallet')%></label> 
-                                                <input  name="fromAddrees" class="form-control required" v-validate="'required'" v-model="sb.fromAddress">
-                                                <span v-show="errors.has('fromAddrees')" class="text-danger">{{ errors.first('fromAddrees') }}</span>
+                                                <input  name="fromAddrees" class="form-control required" v-validate="'required'" v-model="sb.fromAddress"><br>
+                                                <span v-show="errors.has('fromAddrees')" class="text-danger">钱包地址不能为空</span>
                                             </div> 
                                             <div class="form-group">
                                                 <label><%= ctx.__('secret')%> *</label>
-                                                <input  name="privateKey" class="form-control required" v-validate="'required'" v-model="sb.privateKey" >
-                                                <span v-show="errors.has('privateKey')" class="text-danger">{{ errors.first('privateKey') }}</span>
+                                                <input  name="privateKey" class="form-control required" v-validate="'required'" v-model="sb.privateKey" ><br>
+                                                <span v-show="errors.has('privateKey')" class="text-danger">私钥不能为空</span>
                                             </div>                                  
                                             <div class="form-group">
                                                 <label><%= ctx.__('fee_setting')%> *</label>
-                                                <input  name="amout" class="form-control required" v-validate="'required'" v-model="sb.amount" >
-                                                <span v-show="errors.has('amout')" class="text-danger">{{ errors.first('amout') }}</span>
+                                                <input  name="amout" class="form-control required" v-validate="'required'" v-model="sb.amount" ><br>
+                                                <span v-show="errors.has('amout')" class="text-danger">数量不能为空</span>
                                             </div>   
                                             <div class="form-group">
                                                 <button class="btn btn-primary" type="button" v-on:click="sendCoin"><%=ctx.__('start_transfer') %></button>

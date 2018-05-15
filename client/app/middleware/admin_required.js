@@ -12,7 +12,6 @@ module.exports = () => {
       return;
     }
     if (!user) {
-      console.log('not user...', ctx.request.url);
       await ctx.render('login');
       return;
     }

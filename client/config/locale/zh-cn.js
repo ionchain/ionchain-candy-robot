@@ -29,4 +29,5 @@ module.exports = {
   no_transfer: '未转账',
   transfer_success: '转账成功',
   transfer_fail: '转账失败',
+  secret: '私钥',
 };

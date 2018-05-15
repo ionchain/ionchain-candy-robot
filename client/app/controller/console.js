@@ -60,7 +60,6 @@ class ConsoleController extends Controller {
   */
   async upload() {
     const { ctx, config } = this;
-    ctx.session.aa = 1;
     const uid = uuidv1();
     const stream = await ctx.getFileStream();
     const filename = uid + path.extname(stream.filename).toLowerCase();
@@ -146,7 +145,7 @@ class ConsoleController extends Controller {
     }
     ctx.body = {
       code: 1,
-      message: '--',
+      message: 'error',
     };
   }
 
