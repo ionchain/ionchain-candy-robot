@@ -8,11 +8,8 @@ import './vues/validation'
 import './vues/user_vue'
 import sideVue from './vues/side_vue'
 import ajaxOpt from './http'
-import userVue from './vues/user_vue';
 $(document).ready(function(){
     ajaxOpt.getCsrf();
-    userVue();
     const sv = sideVue();
-    sv.sideClick('admin');
     $('#side-menu').metisMenu();
 })

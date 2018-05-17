@@ -19,7 +19,8 @@
             <li class="active">
                 <a><i class="fa fa-th-large"></i> <span class="nav-label"><%= ctx.__('ionchain_tool')%></span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level" role="tablist">                  
-                    <li role="presentation" class="active"><a href="#user" aria-controls="user" role="tab" data-toggle="tab" v-on:click="sideClick('admin')"><%= ctx.__('ionchain_info')%></a></li>
+                    <li role="presentation" class="active"><a href="#user" aria-controls="user" role="tab" data-toggle="tab">发放奖励</a></li>
+                    <li role="presentation"><a href="#transfer_history" aria-controls="transfer_history" role="tab" data-toggle="tab" v-on:click="onBatchClick">发放历史</a></li>
                 </ul>
             </li>
         </ul>

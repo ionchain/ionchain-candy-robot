@@ -174,7 +174,7 @@ ajaxOpt.upload = function(vue) {
     }
   } );
 }
-  ajaxOpt.sendCoin = function(vue) {
+ajaxOpt.sendCoin = function(vue) {
     ajax({
       type: 'post',
       url: '/transfer',
@@ -190,5 +190,39 @@ ajaxOpt.upload = function(vue) {
         alert(event.responseJSON.code);
       }
     } );
+}
+ajaxOpt.getBatches = function(vue) {
+  ajax({
+    type: 'get',
+    url: '/batches',
+    data: {},
+    success: function(result) {
+      if(result.code === 0) {
+        vue.batches = result.data.batches;
+      } else {
+        alert(result.message);
+      }
+    },
+    error: function(event, XMLHttpRequest, ajaxOptions, thrownError) {
+      alert(event.responseJSON.code);
+    }
+  } );
+}
+ajaxOpt.getOrderInfo = function(batch_id,vue) {
+  ajax({
+    type: 'get',
+    url: '/orders',
+    data: { batch_id },
+    success: function(result) {
+      if(result.code === 0) {
+        vue.orders = result.data.orders;
+      } else {
+        alert(result.message);
+      }
+    },
+    error: function(event, XMLHttpRequest, ajaxOptions, thrownError) {
+      alert(event.responseJSON.code);
+    }
+  } );
 }
 export default ajaxOpt;

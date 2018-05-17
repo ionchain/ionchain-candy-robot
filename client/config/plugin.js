@@ -25,3 +25,8 @@ exports.passportLocal = {
   enable: true,
   package: 'egg-passport-local',
 };
+
+exports.mysql = {
+  enable: true,
+  package: 'egg-mysql',
+};

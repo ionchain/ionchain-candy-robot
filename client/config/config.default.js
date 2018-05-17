@@ -43,6 +43,7 @@ module.exports = appInfo => {
     sendCoinRule: {
       fromAddress: { type: 'string' },
       privateKey: { type: 'string' },
+      gas: { type: 'string' },
       amount: { type: 'string', match: /^[0-9]+(.[0-9]{1,})?$/ },
       eths: { type: 'string' },
     },
@@ -73,7 +74,7 @@ module.exports = appInfo => {
   };
 
   // 转账地址
-  config.tranferUrl = 'http://192.168.23.113:8080/transfer';
+  config.tranferUrl = 'http://192.168.23.54:8080/transfer';
 
   // 默认的用户名密码
   config.defaultUser = {

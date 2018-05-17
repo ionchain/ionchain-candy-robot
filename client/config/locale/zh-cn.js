@@ -19,7 +19,7 @@ module.exports = {
   my_wallet: '我的钱包',
   wallet_private_secret: '钱包私钥',
   excel_select: '表单选取',
-  fee_setting: '矿工费用设置',
+  fee_setting: '离子币数目',
   start_transfer: '开始转账',
   cancel: '取消',
   send_coin: '发币信息',

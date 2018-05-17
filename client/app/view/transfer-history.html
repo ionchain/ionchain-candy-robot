@@ -1,0 +1,109 @@
+<div id="transfer_history" class="wrapper wrapper-content animated fadeInRight tab-pane active" role="tabpanel">         
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>数据导入历史</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Config option 1</a>
+                                </li>
+                                <li><a href="#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content" >
+                        <div class="row">
+                                <div class="col-sm-10 m-b-xs">                                
+                                </div>                                
+                                <div class="col-sm-2">                                    
+                                </div>
+                            </div>
+                        <div>
+                            <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                                
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="item in batches">
+                                    <td>
+                                        {{item.id}}
+                                    </td>
+                                    <td>{{item.gmt_create}}</td>
+                                    <td><button class="btn btn-primary" v-on:click="getOrders(item.id)" data-toggle="modal" data-target="#transfer_info">转账详情</button></td>
+                                </tr> 
+                            </tbody>
+                        </table>
+                        </div>
+                        <div class="modal fade" id="transfer_info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document" style="width: auto;">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                  <h4 class="modal-title" id="myModalLabel">--</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>转账人eth</th>
+                                            <th>序列号</th>
+                                            <th>提交时间</th>
+                                            <th>姓名</th>
+                                            <th>城市</th>
+                                            
+                                            <th>微信</th>
+                                            <th>电话</th>
+                                            <th>被转账eth地址</th>
+                                            <th>转账数量</th>
+                                            <th>转账时间</th>
+                                            <th>状态</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="item in orders">
+                                                <td>{{item.from_address}}</td>
+                                                <td>{{item.seq_id}}</td>
+                                                <td>{{item.commit_time}}</td>
+                                                <td>{{item.name}}</td>
+                                                <td>{{item.address}}</td>
+                                                <td>{{item.weixin}}</td>
+                                                <td>{{item.phone}}</td>
+                                                <td>{{item.to_address}}</td>
+                                                <td>{{item.amount}}</td>
+                                                <td>{{item.gmt_create}}</td>
+                                                <td>
+                                                    <template v-if="item.status==1">转账成功</template>
+                                                    <template v-else-if="item.status==2">转账成功</template>
+                                                    <template v-else>--</template>
+                                                </td>
+                                            </tr> 
+                                        </tbody>
+                                    </table>
+                                </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                        </div>
+                        </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
