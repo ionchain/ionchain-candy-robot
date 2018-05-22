@@ -11,3 +11,4 @@ client/run/
 client/.DS_Store
 client/*.sw*
 client/*.un~
+client/config/config.default.js
