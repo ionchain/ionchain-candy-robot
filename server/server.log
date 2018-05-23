@@ -1,0 +1,7 @@
+app listening on port 4000
+转账成功=>{"hash":"0x37eadab5b1c28f8af54c9fe79f3506c188056df473a0dcf511ac18916597c2d2","to":"0x898605b03c1636E51eF0ade1949F44AdF1eC8eB6","amount":0.01,"batchId":"520"}
+hash history: [0x37eadab5b1c28f8af54c9fe79f3506c188056df473a0dcf511ac18916597c2d2], hash: 0x37eadab5b1c28f8af54c9fe79f3506c188056df473a0dcf511ac18916597c2d2 success
+转账成功=>{"hash":"0x62a89724ea4298ea319d2d8c23dc759f3ce943116fc936f4ff4ec1e1e7bbb3ca","to":"0x898605b03c1636E51eF0ade1949F44AdF1eC8eB6","amount":0.01,"batchId":"520"}
+hash history: [0x62a89724ea4298ea319d2d8c23dc759f3ce943116fc936f4ff4ec1e1e7bbb3ca], hash: 0x62a89724ea4298ea319d2d8c23dc759f3ce943116fc936f4ff4ec1e1e7bbb3ca success
+通知成功! body={"data":"Hello!"}
+通知成功! body={"data":"Hello!"}
