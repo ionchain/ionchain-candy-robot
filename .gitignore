@@ -12,3 +12,6 @@ client/.DS_Store
 client/*.sw*
 client/*.un~
 client/config/config.default.js
+server/log/
+server/node_modules/
+server/server.log
