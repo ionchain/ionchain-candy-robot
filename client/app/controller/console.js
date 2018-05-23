@@ -33,12 +33,13 @@ class ConsoleController extends Controller {
     try {
       await awaitWriteStream(stream.pipe(writeStream));
       const rewardMap = ctx.helper.parseXlsx(target);
-      ctx.session.rewardMap = rewardMap;
+      //ctx.session.rewardMap = rewardMap;
       const rewards = [];
       for (const item of rewardMap.values()) {
         rewards.push(item);
       }
-      const importResult = await service.transfer.import(rewardMap);
+      const importResult = await service.transfer.import(rewardMap, filename);
+      console.log(importResult)
       if (!importResult) {
         ctx.body = {
           code: 1,
@@ -73,20 +74,35 @@ class ConsoleController extends Controller {
       ctx.helper.validateError(e);
       return;
     }
-    if (ctx.session.rewardMap.size === undefined) {
-      ctx.body = {
+    // if (ctx.session.rewardMap.size === undefined) {
+    //   ctx.body = {
+    //     code: 1,
+    //     message: ctx.__('pls_upload'),
+    //   };
+    //   return;
+    // }
+    console.log(ctx.session.batch_id)
+    let { fromAddress, amount, privateKey } = ctx.request.body;
+    const results = await service.transfer.getBatchInfoByBatchId(ctx.session.batch_id)
+    console.log(amount)
+    const eths = []
+    for(const batch_info of results.entries()){
+      eths.push(batch_info[1].eth_address.toLowerCase())
+    }
+    console.log(eths)
+    if (eths.length == 0){//(eths.length == 0){
+        ctx.body = {
         code: 1,
-        message: ctx.__('pls_upload'),
+        message: ctx.__('eth_empty'),
       };
       return;
     }
-    let { fromAddress, amount, eths, privateKey, gas } = ctx.request.body;
     fromAddress = fromAddress.toLowerCase();
-    eths = eths.toLowerCase();
-    const toAddress = JSON.parse(eths);
+    //eths = eths.toLowerCase();
+    const toAddress = eths//JSON.parse(eths);
     const result = await ctx.curl(config.tranferUrl, {
       method: 'POST',
-      data: { amount, fromAddress, toAddress, privateKey, gas: Number(gas) },
+      data: { amount: amount, fromAddress: fromAddress, toAddress: toAddress, privateKey: privateKey }, //gas: Number(gas)
       // 自动解析 JSON response
       dataType: 'json',
       contentType: 'json',
@@ -97,6 +113,7 @@ class ConsoleController extends Controller {
     toAddress.forEach(item => {
       addrMap.set(item, 0);
     });
+    console.log("request result ------>;" + result.message)
     if (result.status === 200) {
       if (result.data.success) {
         result.message.forEach(item => {
@@ -108,7 +125,8 @@ class ConsoleController extends Controller {
         });
         const now = new Date();
         const transferInfos = [];
-        const rewardMap = ctx.session.rewardMap;
+        //const rewardMap = ctx.session.rewardMap;
+        const rewardMap = await service.transfer.getBatchInfoByBatchId(ctx.session.batch_id)
         for (const item of addrMap.entries()) {
           const transferInfo = {};
           transferInfo.batch_id = ctx.session.batch_id;
@@ -169,6 +187,7 @@ class ConsoleController extends Controller {
       message: '',
     };
   }
+
 }
 
 

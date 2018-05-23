@@ -9,7 +9,7 @@ import './vues/user_vue'
 import sideVue from './vues/side_vue'
 import ajaxOpt from './http'
 $(document).ready(function(){
-    ajaxOpt.getCsrf();
+    // ajaxOpt.getCsrf();
     const sv = sideVue();
     $('#side-menu').metisMenu();
 })

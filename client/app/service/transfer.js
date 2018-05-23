@@ -4,13 +4,13 @@
 const Service = require('egg').Service;
 
 class TransferService extends Service {
-  async import(user_info) {
+  async import(user_info, filename) {
     const { mysql } = this.app;
     const conn = await mysql.beginTransaction();
     const now = new Date();
     const users = [];
     try {
-      const insertResult = await conn.insert('batch', { gmt_create: now, gmt_modified: now });
+      const insertResult = await conn.insert('batch', { gmt_create: now, gmt_modified: now, filename: filename });
       this.ctx.session.batch_id = insertResult.insertId;
       for (const item of user_info.values()) {
         item.gmt_create = now;
@@ -53,6 +53,45 @@ class TransferService extends Service {
     'name,batch_info.address as address,batch_info.weixin as weixin,batch_info.phone as phone,batch_info.commit_time as commit_time,batch_info.seq_id as seq_id from `order`,batch_info ' +
     'where batch_info.batch_id=? and `order`.to_address=batch_info.eth_address and `order`.batch_id=batch_info.batch_id', [ batch_id ]);
     return result;
+  }
+
+  async getBatchInfoByBatchId(batch_id){
+    const {mysql} = this.app
+    return await mysql.select('batch_info', {where: {batch_id: batch_id}})
+  }
+
+  async find(table, id){
+    const {mysql} = this.app
+    return await mysql.select(table, {where: {id: id}})
+  }
+
+  async updateAttributes(table, attributes, conditions={}){
+
+    const {mysql} = this.app
+    if (Object.keys(conditions).length == 0) {
+      return await mysql.update(table, attributes)
+    }else {
+      //const results = yield app.mysql.query('update ' + table + ' set hits = (hits + ?) where id = ?', [1, postId]);
+      conn = 'update' + table + 'set = '
+      values = []
+      Object.entries(attributes).forEach(function(entry){
+        console.log(entry)
+        conn += entry[0] + ' = ? '
+        values.push(entry[1])
+      });
+
+      conn += ' where '
+      cond = []
+      Object.entries(conditions).forEach(function(entry){
+        cond.push(entry[0] + ' = ? ')
+        values.push(entry[1])
+      });
+
+      for (let value of Object.entries(attributes).values()) {
+        console.log(value);
+      }
+      return await mysql.query('update ' + table + ' set status = ? where id = ?', [1, 34]);
+    }
   }
 }
 

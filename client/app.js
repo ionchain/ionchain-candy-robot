@@ -9,20 +9,20 @@ module.exports = app => {
     }
     return user;
   };
-  const sessionMap = new Map();
-  app.sessionStore = {
-    // support promise / async
-    async get(key) {
-      return sessionMap.get(key);
-    },
-    async set(key, value, maxAge) {
-      maxAge = maxAge || ONE_DAY;
-      sessionMap.set(key, value);
-    },
-    async destroy(key) {
-      sessionMap.delete(key);
-    },
-  };
+  // const sessionMap = new Map();
+  // app.sessionStore = {
+  //   // support promise / async
+  //   async get(key) {
+  //     return sessionMap.get(key);
+  //   },
+  //   async set(key, value, maxAge) {
+  //     maxAge = ONE_DAY;
+  //     sessionMap.set(key, value);
+  //   },
+  //   async destroy(key) {
+  //     sessionMap.delete(key);
+  //   },
+  // };
   app.passport.verify(async (ctx, user) => {
     ctx.logger.debug('passport.verify', user);
     const handler = localAdminHandler;

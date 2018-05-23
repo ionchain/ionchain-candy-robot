@@ -36,7 +36,9 @@
                                             </div>
                                             <div class="form-group">
                                                 <button class="btn btn-primary" type="button" v-on:click="upload">上传</button>
-                                            </div>                                            
+                                            </div>
+                                        </div>
+                                        <div class="row">                                            
                                             <div class="form-group">
                                                 <label><%= ctx.__('my_wallet')%></label> 
                                                 <input  name="fromAddrees" class="form-control required" v-validate="'required'" v-model="sb.fromAddress" ><br>
@@ -52,11 +54,11 @@
                                                 <input  name="amout" class="form-control required" v-validate="'required'" v-model="sb.amount" ><br>
                                                 <span v-show="errors.has('amout')" class="text-danger">数量不能为空</span>
                                             </div>   
-                                            <div class="form-group">
-                                                    <label>矿工费 *</label>
-                                                    <input  name="gas" class="form-control required" v-validate="'required'" v-model="sb.gas" ><br>
-                                                    <span v-show="errors.has('gas')" class="text-danger">矿工费不能为空</span>
-                                                </div>   
+                                            <!-- <div class="form-group">
+                                                <label>矿工费 *</label>
+                                                <input  name="gas" class="form-control required" v-validate="'required'" v-model="sb.gas" ><br>
+                                                <span v-show="errors.has('gas')" class="text-danger">矿工费不能为空</span>
+                                            </div>    -->
                                             <div class="form-group">
                                                 <button class="btn btn-primary" type="button" v-on:click="sendCoin"><%=ctx.__('start_transfer') %></button>
                                             </div>                                             

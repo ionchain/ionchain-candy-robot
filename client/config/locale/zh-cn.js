@@ -24,6 +24,7 @@ module.exports = {
   cancel: '取消',
   send_coin: '发币信息',
   pls_upload: '请先上传文件!',
+  eth_empty: "对方eth地址为空",
   ninxiang: '您向',
   zhuan: '转',
   no_transfer: '未转账',

@@ -9,6 +9,7 @@ module.exports = app => {
   router.post('/upload', controller.console.upload);
   router.get('/csrf', controller.console.getCsrf);
   router.post('/transfer', controller.console.transfer);
+  router.post('/api/transfer/notify', controller.api.transfer.notify)
   const localAdminStrategy = app.passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login',
