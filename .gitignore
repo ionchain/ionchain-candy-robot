@@ -15,3 +15,9 @@ client/config/config.default.js
 server/log/
 server/node_modules/
 server/server.log
+.idea/
+.vscode/
+run/
+.DS_Store
+*.sw*
+*.un~
