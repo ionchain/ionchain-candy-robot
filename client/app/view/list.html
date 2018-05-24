@@ -130,7 +130,7 @@
                                         <td><%= batch_info.phone %></td>
                                         <td><%= batch_info.eth_address %></td>
                                         <td><%= dateFormat(batch_info.gmt_create, "yyyy-mm-dd h:MM:ss") %></td>
-                                        <td style="color: red;"><%= batch_info.status == 0 ? '未转账/转账失败' : '转账成功' %></td>
+                                        <td style="color: red;"><%= batch_info.status == 0 ? '未转账' : '转账成功' %></td>
                                     </tr>
                                 <% }); %>    
                                 </tbody>
