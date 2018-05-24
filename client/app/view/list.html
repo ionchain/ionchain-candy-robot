@@ -55,7 +55,7 @@
                         
                         <div class="row">
                             <div class="col-sm-8">私钥: <%= batch[0].private_key %></div> 
-                            <div class="col-sm-4">创建时间： <%= batch[0].gmt_create %></div>
+                            <div class="col-sm-4">创建时间： <%= dateFormat(batch[0].gmt_create, "yyyy-mm-dd h:MM:ss") %></div>
                         </div>   
                         
                     </div>
@@ -129,7 +129,7 @@
                                         <td><%= batch_info.weixin %></td>
                                         <td><%= batch_info.phone %></td>
                                         <td><%= batch_info.eth_address %></td>
-                                        <td><%= batch_info.gmt_create %></td>
+                                        <td><%= dateFormat(batch_info.gmt_create, "yyyy-mm-dd h:MM:ss") %></td>
                                         <td style="color: red;"><%= batch_info.status == 0 ? '未转账/转账失败' : '转账成功' %></td>
                                     </tr>
                                 <% }); %>    

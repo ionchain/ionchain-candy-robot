@@ -6,6 +6,8 @@ const path = require('path');
 const uuidv1 = require('uuid/v1');
 const fs = require('fs');
 const awaitWriteStream = require('await-stream-ready').write;
+const dateFormat = require('dateformat');
+
 class ConsoleController extends Controller {
   /*
   * 获取csrfToken
@@ -40,6 +42,7 @@ class ConsoleController extends Controller {
       }
       const importResult = await service.transfer.import(rewardMap, filename);
       // console.log(importResult)
+      ctx.logger.info("-----------batch id session:" + ctx.session.batch_id + "--------------")
       if (!importResult) {
         ctx.body = {
           code: 1,
@@ -178,7 +181,7 @@ class ConsoleController extends Controller {
   async listBatches() {
     const { ctx, service } = this;
     const batches = await service.transfer.getBatches();
-    await ctx.render('batches.html', {batches: batches})
+    await ctx.render('batches.html', {batches: batches, dateFormat: dateFormat})
     // ctx.body = {
     //   code: 0,
     //   data: { batches },
@@ -202,8 +205,7 @@ class ConsoleController extends Controller {
     const batch_id = ctx.request.query.batch_id
     const batch = await service.transfer.find('batch', batch_id)
     const batch_infos = await service.transfer.getBatchInfoByBatchId(batch_id)
-    console.log(batch)
-    await ctx.render('list.html', {batch_infos: batch_infos, batch: batch})
+    await ctx.render('list.html', {batch_infos: batch_infos, batch: batch, dateFormat: dateFormat})
   }
 
   async logout() {

@@ -13,15 +13,15 @@ class TransferController extends Controller {
 	    const batch_info = await service.transfer.where('batch_info', {batch_id: batch_id, eth_address: eth_address})
 	    if(batch){
 	      await await this.service.transfer.updateAttributes('batch', {id: batch_id, status: 1})
-	      ctx.logger.info('update batch success');	
+	      ctx.logger.info('update batch success, eth_address:' + eth_address);	
 	    }else {
-	      ctx.logger.info('update batch faild');		
+	      ctx.logger.info('update batch faild, eth_address:' + eth_address);		
 	    }
 	    if(batch_info){
 	      await service.transfer.updateBatchInfo([batch_id, eth_address])	
-	      ctx.logger.info('update batch_info success');		
+	      ctx.logger.info('update batch_info success, eth_address:' + eth_address);		
 	    }else{
-	      ctx.logger.info('update batch_info faild');
+	      ctx.logger.info('update batch_info faild, eth_address:' + eth_address);
 	    }
 	    
 	    ctx.body = {

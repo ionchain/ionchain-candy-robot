@@ -66,7 +66,7 @@
                                     <% batches.forEach(function(batch) { %>
                                         <tr>
                                             <td><%= batch.id %></td>
-                                            <td><%= batch.gmt_create %></td>
+                                            <td><%= dateFormat(batch.gmt_create, "yyyy-mm-dd h:MM:ss") %></td>
                                             <td><a class="label label-primary pull-right" href="/list?batch_id=<%= batch.id %>">转账详情</a></td>
                                         </tr>
                                     <% }); %>   
