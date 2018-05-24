@@ -23,6 +23,10 @@ function userVue() {
         },
         methods: {
             upload: function() {
+                if($("#upload-file").hasClass("disabled")){
+                    alert("请勿重复上传！")
+                    return;
+                }
                 const formData = new FormData();
                 const excelEle = document.getElementById('excel');
                 if (excelEle.files.length == 0) {

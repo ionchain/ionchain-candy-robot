@@ -31,4 +31,8 @@ module.exports = {
   transfer_success: '转账成功',
   transfer_fail: '转账失败',
   secret: '私钥',
+  notify_success: "回调成功",
+  upload_success: "文件上传成功",
+  transfering: "正在转账，请耐心等候",
+  validate_failure: "请检查转账信息"
 };

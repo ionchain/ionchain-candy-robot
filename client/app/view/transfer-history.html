@@ -45,7 +45,10 @@
                                         {{item.id}}
                                     </td>
                                     <td>{{item.gmt_create}}</td>
-                                    <td><button class="btn btn-primary" v-on:click="getOrders(item.id)" data-toggle="modal" data-target="#transfer_info">转账详情</button></td>
+                                    <td>
+                                        <a class="label label-primary pull-right" v-bind:href="'/list?batch_id=' + item.id">转账详情</a>
+                                        <!-- <button class="btn btn-primary" v-on:click="getOrders(item.id)" data-toggle="modal" data-target="#transfer_info">转账详情</button> -->
+                                    </td>
                                 </tr> 
                             </tbody>
                         </table>

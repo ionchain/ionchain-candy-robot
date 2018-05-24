@@ -42,6 +42,11 @@ class TransferService extends Service {
     return true;
   }
 
+  // async updateBatch(){
+  //   const { mysql } = this.app;
+  //   await return await mysql.update(table, attributes);
+  // }
+
   async getBatches() {
     const { mysql } = this.app;
     return await mysql.select('batch', { orders: [[ 'gmt_create', 'desc' ]] });
@@ -65,33 +70,44 @@ class TransferService extends Service {
     return await mysql.select(table, {where: {id: id}})
   }
 
-  async updateAttributes(table, attributes, conditions={}){
+  async where(table, conditions){
+    const {mysql} = this.app
+    return await mysql.select(table, {where: conditions})
+  }
+
+  async updateAttributes(table, attributes){
 
     const {mysql} = this.app
-    if (Object.keys(conditions).length == 0) {
-      return await mysql.update(table, attributes)
-    }else {
-      //const results = yield app.mysql.query('update ' + table + ' set hits = (hits + ?) where id = ?', [1, postId]);
-      conn = 'update' + table + 'set = '
-      values = []
-      Object.entries(attributes).forEach(function(entry){
-        console.log(entry)
-        conn += entry[0] + ' = ? '
-        values.push(entry[1])
-      });
+    return await mysql.update(table, attributes)
+    // if (Object.keys(conditions).length == 0) {
+    //   return await mysql.update(table, attributes)
+    // }else {
+    //   //const results = yield app.mysql.query('update ' + table + ' set hits = (hits + ?) where id = ?', [1, postId]);
+    //   conn = 'update' + table + 'set = '
+    //   values = []
+    //   Object.entries(attributes).forEach(function(entry){
+    //     console.log(entry)
+    //     conn += entry[0] + ' = ? '
+    //     values.push(entry[1])
+    //   });
 
-      conn += ' where '
-      cond = []
-      Object.entries(conditions).forEach(function(entry){
-        cond.push(entry[0] + ' = ? ')
-        values.push(entry[1])
-      });
+    //   conn += ' where '
+    //   cond = []
+    //   Object.entries(conditions).forEach(function(entry){
+    //     cond.push(entry[0] + ' = ? ')
+    //     values.push(entry[1])
+    //   });
 
-      for (let value of Object.entries(attributes).values()) {
-        console.log(value);
-      }
-      return await mysql.query('update ' + table + ' set status = ? where id = ?', [1, 34]);
-    }
+    //   for (let value of Object.entries(attributes).values()) {
+    //     console.log(value);
+    //   }
+    //   return await mysql.query('update ' + table + ' set status = ? where id = ?', [1, 34]);
+    // }
+  }
+
+  async updateBatchInfo(conns) {
+    const {mysql} = this.app
+    return await mysql.query('update batch_info set status = 1 where batch_id = ? and eth_address = ? ', conns);
   }
 }
 

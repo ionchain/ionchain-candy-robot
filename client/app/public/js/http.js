@@ -166,9 +166,13 @@ ajaxOpt.upload = function(vue) {
     processData: false,
     success: function(result) {
       if(result.code === 0) {
-        vue.rewards = result.data.rewards;
+        alert(result.message);
+        $("#upload-message").show()
+        $("#upload-file").addClass("disabled")
+        //vue.rewards = result.data.rewards;
       } else {
         alert(result.message);
+        $("#upload-message").show()
       }
      
     }
@@ -181,7 +185,9 @@ ajaxOpt.sendCoin = function(vue) {
       data: vue.sb,
       success: function(result) {
         if(result.code === 0) {
-          vue.rewards = result.data.rewards;
+          //vue.rewards = result.data.rewards;
+          alert(result.message);
+          window.location.href="/list?batch_id="+ result.data.batch_id; 
         } else {
           alert(result.message);
         }

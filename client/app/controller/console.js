@@ -39,7 +39,7 @@ class ConsoleController extends Controller {
         rewards.push(item);
       }
       const importResult = await service.transfer.import(rewardMap, filename);
-      console.log(importResult)
+      // console.log(importResult)
       if (!importResult) {
         ctx.body = {
           code: 1,
@@ -81,9 +81,10 @@ class ConsoleController extends Controller {
     //   };
     //   return;
     // }
+    const batch_id = ctx.session.batch_id
     console.log(ctx.session.batch_id)
     let { fromAddress, amount, privateKey } = ctx.request.body;
-    const results = await service.transfer.getBatchInfoByBatchId(ctx.session.batch_id)
+    const results = await service.transfer.getBatchInfoByBatchId(batch_id)
     console.log(amount)
     const eths = []
     for(const batch_info of results.entries()){
@@ -97,12 +98,17 @@ class ConsoleController extends Controller {
       };
       return;
     }
+
     fromAddress = fromAddress.toLowerCase();
+    await service.transfer.updateAttributes('batch', {id: batch_id, from_address: fromAddress, private_key: privateKey, amount: amount})
     //eths = eths.toLowerCase();
     const toAddress = eths//JSON.parse(eths);
+    const data = {batchId: batch_id,  amount: amount, fromAddress: fromAddress, toAddress: toAddress, privateKey: privateKey }
+    ctx.logger.info('start request server: %j', data);
+
     const result = await ctx.curl(config.tranferUrl, {
       method: 'POST',
-      data: { amount: amount, fromAddress: fromAddress, toAddress: toAddress, privateKey: privateKey }, //gas: Number(gas)
+      data: data, //gas: Number(gas)
       // 自动解析 JSON response
       dataType: 'json',
       contentType: 'json',
@@ -113,46 +119,48 @@ class ConsoleController extends Controller {
     toAddress.forEach(item => {
       addrMap.set(item, 0);
     });
-    console.log("request result ------>;" + result.message)
+
     if (result.status === 200) {
       if (result.data.success) {
-        result.message.forEach(item => {
-          if (item.startWith(ctx.__('ninxiang'))) {
-            const index = item.indexOf(ctx.__('zhuan'));
-            const addr = item.substring(2, index);
-            addrMap.set(addr, 1);
-          }
-        });
-        const now = new Date();
-        const transferInfos = [];
-        //const rewardMap = ctx.session.rewardMap;
-        const rewardMap = await service.transfer.getBatchInfoByBatchId(ctx.session.batch_id)
-        for (const item of addrMap.entries()) {
-          const transferInfo = {};
-          transferInfo.batch_id = ctx.session.batch_id;
-          transferInfo.gmt_create = now;
-          transferInfo.gmt_modified = now;
-          transferInfo.from_address = fromAddress;
-          transferInfo.to_address = item[0];
-          transferInfo.status = 1;
-          const val = rewardMap.get(item[0]);
-          val.status = 1;
-          if (item[1] !== 1) {
-            transferInfo.status = 2;
-            val.status = 2;
-          }
-          rewardMap.set(item[0], val);
-          transferInfos.push(transferInfo);
-        }
-        await service.tranfer.saveOrder(transferInfos);
-        const rewards = [];
-        for (const item of rewardMap.values()) {
-          rewards.push(item);
-        }
+        ctx.session.batch_id = null;
+        ctx.logger.info('request server success: %j', result);
+        // result.message.forEach(item => {
+        //   if (item.startWith(ctx.__('ninxiang'))) {
+        //     const index = item.indexOf(ctx.__('zhuan'));
+        //     const addr = item.substring(2, index);
+        //     addrMap.set(addr, 1);
+        //   }
+        // });
+        // const now = new Date();
+        // const transferInfos = [];
+        // //const rewardMap = ctx.session.rewardMap;
+        // const rewardMap = await service.transfer.getBatchInfoByBatchId(ctx.session.batch_id)
+        // for (const item of addrMap.entries()) {
+        //   const transferInfo = {};
+        //   transferInfo.batch_id = ctx.session.batch_id;
+        //   transferInfo.gmt_create = now;
+        //   transferInfo.gmt_modified = now;
+        //   transferInfo.from_address = fromAddress;
+        //   transferInfo.to_address = item[0];
+        //   transferInfo.status = 1;
+        //   const val = rewardMap.get(item[0]);
+        //   val.status = 1;
+        //   if (item[1] !== 1) {
+        //     transferInfo.status = 2;
+        //     val.status = 2;
+        //   }
+        //   rewardMap.set(item[0], val);
+        //   transferInfos.push(transferInfo);
+        // }
+        // await service.tranfer.saveOrder(transferInfos);
+        // const rewards = [];
+        // for (const item of rewardMap.values()) {
+        //   rewards.push(item);
+        // }
         ctx.body = {
           code: 0,
-          data: { rewards },
-          message: 'ok',
+          data: {batch_id: batch_id},
+          message: ctx.__('transfering'),
         };
         return;
       }
@@ -170,11 +178,12 @@ class ConsoleController extends Controller {
   async listBatches() {
     const { ctx, service } = this;
     const batches = await service.transfer.getBatches();
-    ctx.body = {
-      code: 0,
-      data: { batches },
-      message: '',
-    };
+    await ctx.render('batches.html', {batches: batches})
+    // ctx.body = {
+    //   code: 0,
+    //   data: { batches },
+    //   message: '',
+    // };
   }
 
   async listOrders() {
@@ -186,6 +195,22 @@ class ConsoleController extends Controller {
       data: { orders },
       message: '',
     };
+  }
+
+  async batchInfoList(){
+    const {ctx, service} = this
+    const batch_id = ctx.request.query.batch_id
+    const batch = await service.transfer.find('batch', batch_id)
+    const batch_infos = await service.transfer.getBatchInfoByBatchId(batch_id)
+    console.log(batch)
+    await ctx.render('list.html', {batch_infos: batch_infos, batch: batch})
+  }
+
+  async logout() {
+    const { ctx } = this;
+    ctx.session = null;
+    ctx.logout();
+    ctx.redirect('/login');
   }
 
 }

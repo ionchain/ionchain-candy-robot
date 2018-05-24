@@ -2,6 +2,6 @@
   "contractAddress":"0x92e831bbbb22424e0f22eebb8beb126366fa07ce",
   "port":"4000",
   "providerUrl":"https://ropsten.infura.io/",
-  "notifyServer":"http://localhost:3000",
+  "notifyServer":"http://192.168.2.1:7001/api/transfer/",
   "notifyMethod":"notify"
 }
