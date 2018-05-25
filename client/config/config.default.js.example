@@ -18,11 +18,11 @@ module.exports = appInfo => {
       // 端口号
       port: '3306',
       // 用户名
-      user: 'root',
+      user: 'xxx',
       // 密码
       password: '',
       // 数据库名
-      database: 'ionchain_tool',
+      database: 'xxxx',
     },
     // 是否加载到 app 上，默认开启
     app: true,
@@ -74,12 +74,12 @@ module.exports = appInfo => {
   };
 
   // 转账地址
-  config.tranferUrl = 'http://192.168.23.54:8080/transfer';
+  config.tranferUrl = 'http://host:port/transfer';
 
   // 默认的用户名密码
   config.defaultUser = {
-    username: 'admin',
-    password: 'abcd.1234',
+    username: 'xxxx',
+    password: 'xxxx',
   };
   return config;
 };
