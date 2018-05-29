@@ -12,8 +12,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //4.转账接口通知
 var config = require('./config.json');
 var transfer = require('erc20TokenBatchTransfer');
-var txEvent=require('erc20TokenBatchTransfer/lib/taskqueue').txEvent;
-txEvent.on('tx_success',function(obj) {
+var txEvent=require('erc20TokenBatchTransfer/lib/txEvents');
+txEvent.subscribe('tx_success',function(obj) {
     obj.batchId = batchId;
     console.log("转账成功=>"+JSON.stringify(obj));
     notify(obj);
