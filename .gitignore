@@ -15,6 +15,7 @@ client/config/config.default.js
 server/log/
 server/node_modules/
 server/server.log
+server/config.json
 .idea/
 .vscode/
 run/

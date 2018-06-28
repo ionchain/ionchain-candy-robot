@@ -1,0 +1,7 @@
+{
+  "contractAddress":"xxxx",
+  "port":"4000",
+  "providerUrl":"https://ropsten.xxxx.io/",
+  "notifyServer":"http://xxx:7001/api/transfer/",
+  "notifyMethod":"notify"
+}
