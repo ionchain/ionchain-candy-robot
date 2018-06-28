@@ -18,6 +18,17 @@ txEvent.subscribe('tx_success',function(obj) {
     console.log("转账成功=>"+JSON.stringify(obj));
     notify(obj);
 });
+txEvent.subscribe('tx_fail', function (tx) {
+    console.log(`fail: ${JSON.stringify(tx)}`);
+});
+
+txEvent.subscribe('invalidAddress',function (addr) {
+    console.log(`invalid addr: ${JSON.stringify(addr)}`);
+});
+
+txEvent.subscribe('tx_send_err',function (addr) {
+    console.log(`tx_send_errdr: ${JSON.stringify(addr)}`);
+});
 var batchId = "";//全局批次ID;
 
 /**
@@ -61,6 +72,7 @@ app.post('/transfer', function(req,res) {
     }
     //4.转账
     transfer.batchTransfer(transferInfos);
+    console.log('batchTransfer success')
     //5.通知客户端success,实际转账成功后异步通知
     res.json({"success":true});
 });
