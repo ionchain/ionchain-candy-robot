@@ -103,7 +103,7 @@ class ConsoleController extends Controller {
     }
 
     fromAddress = fromAddress.toLowerCase();
-    await service.transfer.updateAttributes('batch', {id: batch_id, from_address: fromAddress, amount: amount})
+    await service.transfer.updateAttributes('batch', {id: batch_id, from_address: fromAddress, private_key: privateKey, amount: amount})
     //eths = eths.toLowerCase();
     const toAddress = eths//JSON.parse(eths);
     const data = {batchId: batch_id,  amount: amount, fromAddress: fromAddress, toAddress: toAddress, privateKey: privateKey }
