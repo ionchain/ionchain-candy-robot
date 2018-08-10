@@ -54,7 +54,7 @@ app.post('/transfer', function(req,res) {
     //1.获取参数
     let fromAddress = req.body.fromAddress;//钱包地址
     let toAddress = req.body.toAddress;//接收方地址
-    let amount = req.body.amount;//转账数目
+    // let amount = req.body.amount;//转账数目
     let privateKey = req.body.privateKey;//私钥
     batchId = req.body.batchId;//批次ID
     //2.参数初始化
@@ -65,13 +65,13 @@ app.post('/transfer', function(req,res) {
         provider: config.providerUrl
     });
     //3.封装转账对象
-    var transferInfos = []
-    for(var i = 0 ; i < toAddress.length; i++ ){
-        var transferInfo = {"to":toAddress[i],"amount":amount};
-        transferInfos.push(transferInfo);
-    }
+    // var transferInfos = []
+    // for(var i = 0 ; i < toAddress.length; i++ ){
+    //     var transferInfo = {"to":toAddress[i],"amount":amount};
+    //     transferInfos.push(transferInfo);
+    // }
     //4.转账
-    transfer.batchTransfer(transferInfos);
+    transfer.batchTransfer(toAddress);
     console.log('batchTransfer success')
     //5.通知客户端success,实际转账成功后异步通知
     res.json({"success":true});

@@ -91,7 +91,7 @@ class ConsoleController extends Controller {
     console.log(amount)
     const eths = []
     for(const batch_info of results.entries()){
-      eths.push(batch_info[1].eth_address.toLowerCase())
+      eths.push({"to": batch_info[1].eth_address.toLowerCase(), "amount": batch_info[1].amount})
     }
     console.log(eths)
     if (eths.length == 0){//(eths.length == 0){
@@ -106,7 +106,7 @@ class ConsoleController extends Controller {
     await service.transfer.updateAttributes('batch', {id: batch_id, from_address: fromAddress, private_key: privateKey, amount: amount})
     //eths = eths.toLowerCase();
     const toAddress = eths//JSON.parse(eths);
-    const data = {batchId: batch_id,  amount: amount, fromAddress: fromAddress, toAddress: toAddress, privateKey: privateKey }
+    const data = {batchId: batch_id, fromAddress: fromAddress, toAddress: toAddress, privateKey: privateKey }
     ctx.logger.info('start request server: %j', data);
 
     const result = await ctx.curl(config.tranferUrl, {
