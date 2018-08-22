@@ -16,6 +16,7 @@ server/log/
 server/node_modules/
 server/server.log
 server/config.json
+server/config.json.backup
 .idea/
 .vscode/
 run/
