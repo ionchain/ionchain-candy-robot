@@ -114,6 +114,7 @@
                                     <th>微信号</th>
                                     <th>电话号码</th>
                                     <th>以太坊地址</th>
+                                    <th>离子币</th>
                                     <th>转账时间</th>
                                     <th>状态</th>
                                 </tr>
@@ -129,6 +130,7 @@
                                         <td><%= batch_info.weixin %></td>
                                         <td><%= batch_info.phone %></td>
                                         <td><%= batch_info.eth_address %></td>
+                                        <td><%= batch_info.amount %></td>
                                         <td><%= dateFormat(batch_info.gmt_create, "yyyy-mm-dd h:MM:ss") %></td>
                                         <td style="color: red;"><%= batch_info.status == 0 ? '未转账' : '转账成功' %></td>
                                     </tr>
